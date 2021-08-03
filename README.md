@@ -92,14 +92,47 @@
 электронных журналов регистрации, анализ фактических настроек, анализ уязвимостей, проведение 
 тестирования на проникновение и т.п.).
 
-Задача
-
-Токен сообщения
+Задача Токен сообщения
 
 В рамках работы был собран массив из исходных данных в формате пар ключ:значение, затем был добавлен в массив строка password со значением, остортирован массив ключей по алфавиту, были сконкатенированы значения всех пар, и был вычислен хэш файла с помощью команды 
 openssl dgst -SHA256 signature.txt
 
 SHA256(signature.txt)= b42a1e6c857e2e8a49cddb0883419ec8d94b610745bffc9d1c81672293c419f8
+
+
+Задача Шифрование карточных данных
+
+1.) В рамках проделанной работы было зашифрованно сообщение командой:
+
+openssl pkeyutl -encrypt -pubin -inkey public.key -in card.txt -out cypher.txt
+
+2.) Расшифрованно сообщение командой:
+
+openssl pkeyutl -decrypt -inkey private.key -in cypher.txt -out decrypted.txt
+
+3.) Закодирована криптограмма  cypher.txt с помощью Base64:
+
+openssl enc -base64 -in cypher.txt -out msg.base64
+
+4.) Раскодирована msg.base64:
+
+ openssl enc -d -base64 -in msg.base64 -out msg.txt
+ 
+5.) Расшифровано msg.txt:
+
+openssl pkeyutl -decrypt -inkey private.key -in msg.txt -out dec.txt
+
+
+В итоге файл dec.txt содержит:
+
+PAN=%4300000000000777%;ExpDate=%08%%23%;CVV=%999%.
+
+
+
+
+
+
+
 
 
 
